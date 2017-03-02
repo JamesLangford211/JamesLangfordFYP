@@ -48,7 +48,7 @@ public class Maze {
 	 * @param name
 	 */
 	public Maze(String difficulty, String name){
-		String url = "src/assets/levels/"+difficulty+"Levels/"+name+".csv";
+		String url = "src/assets/levels/"+difficulty+"Levels/"+name;
 		//read in csv file from designated URL
 		ArrayList<ArrayList<String>> stringMaze = readInFile(url);
 		width = stringMaze.get(0).size();

@@ -14,6 +14,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -146,6 +147,20 @@ public class MainMenuUI extends JFrame{
 		    public void mouseClicked(MouseEvent e) {
 		        LevelCreatorUI lcUI = new LevelCreatorUI();
 		    }
+		});
+		
+		load.addMouseListener(new MouseAdapter() {
+			@Override
+	    	public void mouseClicked(MouseEvent e) {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setCurrentDirectory(new File("src/assets/levels/userCreatedLevels/"));
+			int result = fileChooser.showOpenDialog(frame);
+			if (result == JFileChooser.APPROVE_OPTION) {
+			    File selectedFile = fileChooser.getSelectedFile();
+			    WorkspaceUI ui = new WorkspaceUI("userCreated",selectedFile.getName());
+			    
+			}
+	    	}
 		});
 		
 		frame.setVisible(true);

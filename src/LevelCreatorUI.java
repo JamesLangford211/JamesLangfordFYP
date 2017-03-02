@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ public class LevelCreatorUI {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		creatorPanel = new JPanel();
 		mazeCreator = new ArrayList<ArrayList<JPanel>>();
+		
 		
 		JPanel overallPanel = new JPanel();
 		JPanel north = new JPanel();
@@ -124,7 +126,7 @@ public class LevelCreatorUI {
 	private File stringToFile(String directory){
 		File file = null;
 		try {
-			file = new File("src\\assets\\userLevels\\fileName.csv");
+			file = new File("src\\assets\\levels\\userCreatedLevels\\fileName.csv");
 			FileWriter fileWriter = new FileWriter(file);
 			fileWriter.write(mazeToString());
 			fileWriter.flush();
