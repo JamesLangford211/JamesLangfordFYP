@@ -19,7 +19,7 @@ public class MazeCanvas extends JPanel{
 	
 	public MazeCanvas(Maze m){
 		this.m = m;
-		size = 200;
+		size = 50;
 		
 		setPreferredSize(new Dimension(m.height*size,m.width*size));
 		setLayout(new BorderLayout());

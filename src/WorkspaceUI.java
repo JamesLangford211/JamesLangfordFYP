@@ -4,15 +4,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class WorkspaceUI extends JFrame{
 	
@@ -21,6 +28,7 @@ public class WorkspaceUI extends JFrame{
 	private JPanel overall;
 	private JPanel left;
 	private JPanel flowchartWizard;
+	private JPanel buttonContainer;
 	
 	public WorkspaceUI(String difficulty, String levelName){
 		
@@ -36,13 +44,15 @@ public class WorkspaceUI extends JFrame{
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		overall.setBackground(Color.CYAN);
 		frame.add(overall, BorderLayout.CENTER);
-		overall.setLayout(new GridLayout(1,2));
+		overall.setLayout(new GridLayout());
+		frame.setVisible(true);
 		
 		leftSetup();
 		rightSetup();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.pack();
 	}
 	
 	private void rightSetup(){
@@ -67,7 +77,7 @@ public class WorkspaceUI extends JFrame{
 		
 		JPanel flowchart = new JPanel();
 		
-		left.setLayout(new GridLayout(2,1));
+		left.setLayout(new BorderLayout());
 		left.add(flowchart);
 		
 		JLabel l1 = new JLabel("flowchartArea");
@@ -75,49 +85,78 @@ public class WorkspaceUI extends JFrame{
 		l1.setFont(new Font("Serif", Font.BOLD, 40));
 		flowchart.setBackground(Color.DARK_GRAY);
 		flowchart.add(l1);
-		
-
+	
 		flowchartWizardSetup();
-		
 	}
 	
 	private void flowchartWizardSetup(){
 		flowchartWizard = new JPanel();
-		left.add(flowchartWizard);
-		JPanel buttonContainer = new JPanel();
+		flowchartWizard.setLayout(new FlowLayout());
+		left.add(flowchartWizard, BorderLayout.SOUTH);
 		
-		flowchartWizard.setLayout(new CardLayout());
+		JTabbedPane tabs = new JTabbedPane();
+		//tabs.setPreferredSize(new Dimension(left.getWidth(),300));
+		JPanel moves = new JPanel();
+		moves.setLayout(new FlowLayout());
+		flowchartWizard.add(tabs);
 		
-		JButton moveInstruction = new JButton("Add a move");
-		flowchartWizard.add(moveInstruction);
+		JButton addNode = new JButton("Add");
+		flowchartWizard.add(addNode);
+		addNode.setBackground(Color.GREEN);
 		
-		moveInstruction.addActionListener(new ActionListener()
-		{
-			  public void actionPerformed(ActionEvent e)
-			  {
-				movePanel();
-				flowchartWizard.remove(moveInstruction);
-			    
-			  }
-			});
-	}
-	
-	private void movePanel(){
-		JPanel movesPanel = new JPanel();
-		movesPanel.setLayout(new CardLayout());
-		JButton up = new JButton("Up");
-		JButton down = new JButton("Down");
-		JButton left = new JButton("Left");
-		JButton right = new JButton("Right");
+		tabs.addTab("Add a Move",moves);
+		JButton up = new JButton("up");
+		moves.add(up);
 		
-		movesPanel.add(up);
-		movesPanel.add(down);
-		movesPanel.add(left);
-		movesPanel.add(right);
+		JButton down = new JButton("down");
+		moves.add(down);
 		
+		JButton left = new JButton("left");
+		moves.add(left);
 		
-		flowchartWizard.add(movesPanel);
+		JButton right = new JButton("right");
+		moves.add(right);
 		
+		JPanel decision = new JPanel();
+		tabs.addTab("Make a decision", decision);
+		decision.setLayout(new FlowLayout());
+		JLabel ifLabel = new JLabel("If:");
+		decision.add(ifLabel);
+		
+		JLabel notLabel = new JLabel("Not");
+		decision.add(notLabel);
+		JCheckBox not = new JCheckBox();
+		decision.add(not);
+		
+		JComboBox<String> condition = new JComboBox<String>();
+		condition.addItem("Wall is present:");
+		condition.addItem("Just visited square:");
+		decision.add(condition);
+		
+		JComboBox<String> potentialMoves = new JComboBox<String>();
+		potentialMoves.addItem("Up");
+		potentialMoves.addItem("Down");
+		potentialMoves.addItem("Left");
+		potentialMoves.addItem("Right");
+		decision.add(potentialMoves);
+		
+		JPanel loop = new JPanel();
+		tabs.addTab("Add a loop",loop);
+		
+		addNode.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		    	//this is where we get the information about the node we want to add
+		    		//first get the tab that the user is accessing e.g. make a move, make a decision
+		    	
+		    		//if its on the move tab create a node representing a move and pass in that information
+		    	
+		    		//if its on the decision tab create a decision node
+		    	
+		    		//if its on the loop tab create an edge between two specified nodes
+		    		
+		    }
+		});
 		
 	}
 }
